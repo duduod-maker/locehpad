@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   define: {
-    'process.env.API_BASE_URL': JSON.stringify("https://locehpad-backend.onrender.com"),
-    'http://localhost': JSON.stringify("https://locehpad-backend.onrender.com"),
+    'import.meta.env.VITE_API_BASE_URL': JSON.stringify("https://locehpad-backend.onrender.com"),
   },
 })
