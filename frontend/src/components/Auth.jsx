@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
 const Auth = ({ setToken, setIsAdmin }) => {
