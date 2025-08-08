@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import DirectRequestModal from '../components/DirectRequestModal';
 import AddToCartModal from '../components/AddToCartModal';
 import { Container, Accordion } from 'react-bootstrap';
