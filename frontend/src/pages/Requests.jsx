@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
+import API_BASE_URL from '../config';
 import { Container, Card, Table, Form, Button } from 'react-bootstrap';
 
 const Requests = () => {
@@ -18,7 +19,7 @@ const Requests = () => {
 
   const fetchRequests = () => {
     if (!token) return;
-    fetchWithAuth('http://localhost:8000/requests/')
+    fetchWithAuth(`${API_BASE_URL}/requests/`)
       .then(response => {
         if (!response.ok) {
           return response.text().then(text => { throw new Error(text || 'Network response was not ok') });
@@ -45,7 +46,7 @@ const Requests = () => {
   }, [token]);
 
   const handleStatusChange = (requestId, newStatus) => {
-    fetchWithAuth(`http://localhost:8000/requests/${requestId}`, {
+    fetchWithAuth(`${API_BASE_URL}/requests/${requestId}`, {
       method: 'PUT',
       body: JSON.stringify({ status: newStatus }),
     })
@@ -67,7 +68,7 @@ const Requests = () => {
 
   const handleDeleteRequest = (requestId) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?")) {
-      fetchWithAuth(`http://localhost:8000/requests/${requestId}`, {
+      fetchWithAuth(`${API_BASE_URL}/requests/${requestId}`, {
         method: 'DELETE',
       })
       .then(response => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Card, Table, Row, Col } from 'react-bootstrap';
 import { jwtDecode } from "jwt-decode";
+import API_BASE_URL from '../config';
 
 const MaterialFilter = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -32,7 +33,7 @@ const MaterialFilter = () => {
 
   const fetchMaterialTypes = () => {
     if (!token) return;
-    fetchWithAuth('http://localhost:8000/material_types/')
+    fetchWithAuth(`${API_BASE_URL}/material_types/`)
       .then(response => response.json())
       .then(data => setMaterialTypes(data))
       .catch(error => console.error("Erreur lors de la récupération des types de matériel:", error));
@@ -42,7 +43,7 @@ const MaterialFilter = () => {
     event.preventDefault();
     if (!token) return;
 
-    let url = 'http://localhost:8000/materiels/?';
+    let url = `${API_BASE_URL}/materiels/?`;
     const params = new URLSearchParams();
 
     if (searchQuery) {

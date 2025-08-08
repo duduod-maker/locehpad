@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
+import API_BASE_URL from '../config';
 
 const Auth = ({ setToken, setIsAdmin }) => {
   const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ const Auth = ({ setToken, setIsAdmin }) => {
     const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&');
 
     try {
-      const response = await fetch('http://localhost:8000/token', {
+      const response = await fetch(`${API_BASE_URL}/token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

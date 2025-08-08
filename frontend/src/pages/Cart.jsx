@@ -1,44 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Button, Table, Row, Col } from 'react-bootstrap';
+import { Container, Card, Table, Form, Button } from 'react-bootstrap';
+import API_BASE_URL from '../config';
 
 const Cart = () => {
-  const [cart, setCart] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [cartItems, setCartItems] = useState([]);
 
   const fetchWithAuth = async (url, options = {}) => {
     const headers = {
       ...options.headers,
       'Authorization': `Bearer ${token}`,
     };
-    return fetch(url, { ...options, headers });
+    const response = await fetch(url, { ...options, headers });
+    if (response.status === 401) {
+      setToken('');
+      localStorage.removeItem('token');
+    }
+    return response;
   };
 
-  const fetchCart = () => {
+  const fetchCartItems = () => {
     if (!token) return;
-    fetchWithAuth('http://localhost:8000/cart/')
+    fetchWithAuth(`${API_BASE_URL}/cart/`)
       .then(response => response.json())
-      .then(data => setCart(data))
-      .catch(error => console.error("Erreur lors de la récupération du panier:", error));
+      .then(data => setCartItems(data))
+      .catch(error => console.error("Erreur lors de la récupération des articles du panier:", error));
   };
-
-  useEffect(() => {
-    fetchCart();
-  }, [token]);
 
   const handleRemoveFromCart = (itemId) => {
-    fetchWithAuth(`http://localhost:8000/cart/items/${itemId}`,
+    if (!token) return;
+    fetchWithAuth(`${API_BASE_URL}/cart/items/${itemId}`,
       {
         method: 'DELETE',
-      }
-    )
-      .then(() => {
-        fetchCart();
+      })
+      .then(response => {
+        if (response.ok) {
+          fetchCartItems();
+        } else {
+          console.error("Erreur lors de la suppression de l'article du panier");
+        }
       })
       .catch(error => console.error("Erreur lors de la suppression de l'article du panier:", error));
   };
 
   const handleSubmitCart = () => {
-    fetchWithAuth('http://localhost:8000/cart/submit', {
+    if (!token) return;
+    fetchWithAuth(`${API_BASE_URL}/cart/submit`, {
       method: 'POST',
     })
       .then(response => response.json())
