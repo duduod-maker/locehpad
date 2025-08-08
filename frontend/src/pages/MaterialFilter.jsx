@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Card, Table, Row, Col } from 'react-bootstrap';
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const MaterialFilter = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
