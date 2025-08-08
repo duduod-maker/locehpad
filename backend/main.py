@@ -27,6 +27,7 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",  # L'origine de votre frontend Vite
     "http://localhost:8000",  # L'origine de votre backend
+    "https://locehpad-frontend.onrender.com", # L'origine de votre frontend déployé sur Render
 ]
 
 app.add_middleware(
