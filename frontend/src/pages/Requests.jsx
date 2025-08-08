@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { Container, Card, Table, Form, Button } from 'react-bootstrap';
 
 const Requests = () => {
